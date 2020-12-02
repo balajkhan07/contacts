@@ -1,3 +1,4 @@
+import 'package:contacts/pages/contact/contact_image.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -122,14 +123,22 @@ class ContactDetails extends StatelessWidget {
 
   Widget _contactImage(BuildContext context) {
     return contact.avatar.isNotEmpty
-        ? Container(
-            width: MediaQuery.of(context).size.width,
-            height: 200,
-            child: Image.memory(
-              contact.avatar,
-              fit: BoxFit.fitWidth,
-              alignment: Alignment.center,
+        ? GestureDetector(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              child: Image.memory(
+                contact.avatar,
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.center,
+              ),
             ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ContactImage(contact.avatar)));
+            },
           )
         : Container(
             width: MediaQuery.of(context).size.width,
