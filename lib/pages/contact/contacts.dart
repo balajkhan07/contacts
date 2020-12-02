@@ -3,6 +3,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:contacts/pages/contact/contact_details.dart';
 import 'package:contacts/pages/contact/create_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:math';
 
 class Contacts extends StatefulWidget {
   @override
@@ -15,7 +16,14 @@ class _ContactState extends State<Contacts> {
   Iterable<Contact> contacts = [];
   Iterable<Contact> filteredContacts = [];
   TextEditingController _searchContactController = TextEditingController();
+  List colors = [Colors.red, Colors.green, Colors.yellow, Colors.deepOrange];
+  Random random = new Random();
   bool searchContact = false;
+  int randomIndex = 0;
+
+  void changeIndex() {
+    setState(() => randomIndex = random.nextInt(4));
+  }
 
   @override
   void initState() {
@@ -48,11 +56,13 @@ class _ContactState extends State<Contacts> {
           ListTile(
             tileColor: Theme.of(context).primaryColor,
             onTap: () {
+              changeIndex();
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) => ContactDetails(
-                          contact: filteredContacts.elementAt(index))));
+                          contact: filteredContacts.elementAt(index),
+                          color: colors[randomIndex])));
             },
             title: Text(
               filteredContacts.elementAt(index).displayName,

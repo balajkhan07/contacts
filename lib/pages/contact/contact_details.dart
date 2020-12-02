@@ -4,7 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ContactDetails extends StatelessWidget {
   final Contact contact;
-  ContactDetails({this.contact});
+  final Color color;
+  ContactDetails({this.contact, this.color});
 
   Widget _buildActions(BuildContext context) {
     return Flex(
@@ -120,15 +121,26 @@ class ContactDetails extends StatelessWidget {
   }
 
   Widget _contactImage(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 200,
-      child: Image.memory(
-        contact.avatar,
-        fit: BoxFit.fitWidth,
-        alignment: Alignment.center,
-      ),
-    );
+    return contact.avatar.isNotEmpty
+        ? Container(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            child: Image.memory(
+              contact.avatar,
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.center,
+            ),
+          )
+        : Container(
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            color: color,
+            child: Icon(
+              Icons.person,
+              color: Colors.white,
+              size: 120,
+            ),
+          );
   }
 
   Widget _contactTitle() {
